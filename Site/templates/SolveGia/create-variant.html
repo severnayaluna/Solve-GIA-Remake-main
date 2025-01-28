@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<form method="post">
+    {% csrf_token %}
+    {% for type_pack in task_pack %}
+    <p>
+        <h2>№{{type_pack.0}}</h2>
+        <select multiple="true" name="tasks-{{type_pack.0}}-[]">
+            {% for pk_and_rating in type_pack.1 %}
+            <option value="{{pk_and_rating.0}}">
+                {{pk_and_rating.0}}({{pk_and_rating.1}})
+            </option>    
+            {% endfor %}
+        </select>
+    </p>
+    {% endfor %}
+    <button type="submit">Create</button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+    <h1><a href="{{task.get_absolute_url}}">№{{task.pk}}({{task.rating}})</a></h1>
+    {% autoescape off %}
+        {{task.text}}
+        <br>
+        <h1>Answer:</h1>
+        {% if task.answer %}
+            {{task.answer}}
+        {% else %}
+            This task haven't answer
+        {% endif %}
+    {% endautoescape %}
+
+
+{% endblock %}

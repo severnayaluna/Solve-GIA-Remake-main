@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+
+<form method="post">
+    {% csrf_token %}
+    <h1>You cant return to this page after sending answer!!!</h1>
+    <h1>Task №{{task.1}}.{{task.0.pk}}({{task.0.rating}})</h1>
+    {% autoescape off %}
+        {{task.0.text}}
+    {% endautoescape %}
+    <br>
+    <h1>Answer:</h1>
+    <input type="text" placeholder="Your answer" name="answer">
+    <button type="submit">Send</button>
+</form>
+
+
+<script>
+    function add_second() {
+        Cookies.set('time', parseInt(Cookies.get('time')) + 1)
+    }
+
+    setInterval(add_second, 1000)
+
+</script>
+
+
+{% endblock %}

@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<h1>{{user.username}}({{user.status.name}})</h1>
+{{user.username}} - {% if user.tg_id %}
+    {{user.tg_id}}
+{% else %}
+    No tg linked(
+{% endif %}
+<br>
+<br>
+<form method="post">
+    {% csrf_token %}
+    Your tg id - <input type="number" placeholder="telegram id" name="tg-id">(if you doesn't know it - type <b>/start</b> in our <a href="https://t.me/solvegiabot">bot</a>)
+    <button type="submit" name="SUBMIT" value="send">Send</button>
+</form>
+<form method="post">
+    {% csrf_token %}
+    Your tg id - <input type="number" placeholder="telegram id" name="tg-id">
+    Secret code - <input type="number" placeholder="code" name="code">
+    <button type="submit" name="SUBMIT" value="set">Set</button>
+</form>
+<br>
+
+{% if user.status.weight > 1%}
+Create your own group:
+<form method="post">
+    {% csrf_token %}
+    <select name="class[]">
+        {% for class in classes %}
+        <option value="{{class}}">{{class}}</option>
+        {% endfor %}
+    </select>
+    <select name="letter[]">
+        {% for letter in russian_alphabet %}
+        <option value="{{letter}}">{{letter}}</option>
+        {% endfor %}
+    </select>
+    <select name="cat[]">
+        {% for cat in cats %}
+        <option value="{{cat}}">{{cat}}</option>
+        {% endfor %}
+    </select>
+    <button type="submit" name="SUBMIT" value="create-group">Create group</button>
+</form>
+<br>
+{% endif %}
+
+
+{% if user.status.weight == 1 or user.status.weight == 3 %}
+Your home work:<br>
+{% for group_pack in hws_pack %}
+<pre>   Group - {{group_pack.group.name}}:<br></pre>
+{% for hw in group_pack.homeworks %}
+<pre>
+        <a href="{% url 'solve-homework' group_pack.group.pk hw.pk %}">Variant {{hw.variant.pk}}({{hw.variant.median_rating}}) - {{hw.variant.category.name}}</a>
+</pre>
+{% endfor %}
+{% endfor %}
+{% endif %}
+<br>
+
+{% if user.status.weight > 1 %}
+Set homework for
+<form method="post">
+    {% csrf_token %}
+    <select name="set-hw-for-group[]">
+        {% for group in groups %}
+        <option value="{{group.pk}}">{{group.name}}</option>
+        {% endfor %}
+    </select>
+    <input type="number" placeholder="variant id" name="hw-variant-id">
+    <button type="submit" name="SUBMIT" value="set-hw">Set homework</button>
+</form>
+<br>
+{% endif %}
+
+{% if user.status.weight > 1 %}
+You can add someone to your group:<br>
+<form method="post">
+    {% csrf_token %}
+    <select name="group[]">
+        {% for group in groups %}
+        <option value="{{group.pk}}">{{group.name}}</option>
+        {% endfor %}
+    </select>
+    <input type="number" name="user-pk" placeholder="User id">
+    <button type="submit" name="SUBMIT" value="add-user">Add</button>
+</form>
+<br>
+
+Your groups:<br>
+{% for group in groups %}
+<table style="border: 1px solid black;">
+    <thead>
+    <tr>
+        <td>
+            Users in group <a href="{{group.results_url}}">{{group.name}}</a>
+        </td>
+    </tr>
+    </thead>
+    {% for us in group.users.all %}
+    <tr>
+        <td style="border-top: 1px solid black;">
+            {{us.pk}} | {{us.username}}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+<br>
+{% endfor %}
+{% endif %}
+
+
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+{% for var in variants %}
+<a href="{{var.get_absolute_url}}">Variant №{{var.pk}}({{var.median_rating}})</a> of <a href="{{category.get_absolute_url}}">{{category.name}}</a><br>
+{% endfor %}
+
+
+{% endblock %}

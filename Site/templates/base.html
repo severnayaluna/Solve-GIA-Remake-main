@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+</head>
+<body>
+    <footer>
+        <b>·</b>
+        <a href="/">SolveGIA</a> <b>·</b>
+        <a href="{% url 'profile' %}">Profile</a> <b>·</b>
+        <a href="{% url 'signup' %}">SignUp</a> <b>·</b>
+        <a href="{% url 'login' %}">SignIn</a> <b>·</b>
+    </footer>
+{% block content %}
+{% endblock %}
+</body>
+</html>

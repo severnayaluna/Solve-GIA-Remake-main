@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<h1>{{ request.user.username }}</h1>
+<form method="post">
+    {% csrf_token %}
+    Generate variant of
+    <select name="category[]">
+        {% for cat in categories %}
+        <option name="category" value="{{cat.name}}">{{cat.name}}</option>
+        {% endfor %}
+    </select>
+    <input type="number" name="difficulty[]" placeholder="Difficulty(%)" min="0" max="100">
+    answers - <input type="checkbox" name="answers">
+    <button type="submit" name="SUBMIT" value="gen">Generate</button>
+</form>
+
+<form method="post">
+    {% csrf_token %}
+    Show all variants of
+    <select name="category[]">
+        {% for cat in categories %}
+        <option name="cat" value="{{cat.name}}">{{cat.name}}</option>
+        {% endfor %}
+    </select>
+    <button type="submit" name="SUBMIT" value="show-vars">Show</button>
+</form>
+
+<form method="post">
+    {% csrf_token %}
+    Show all tasks of
+    <select name="category[]">
+        {% for cat in categories %}
+        <option name="cat" value="{{cat.name}}">{{cat.name}}</option>
+        {% endfor %}
+    </select>
+    and type <input type="number" name="type-number" min="1" placeholder="number">
+    <button type="submit" name="SUBMIT" value="show-tasks">Show</button>
+</form>
+
+<form method="post">
+    {% csrf_token %}
+    Create variant of
+    <select name="category[]">
+        {% for cat in categories %}
+        <option name="cat" value="{{cat.name}}">{{cat.name}}</option>
+        {% endfor %}
+    </select>
+    <button type="submit" name="SUBMIT" value="create">Create</button>
+</form>
+
+
+{% endblock %}

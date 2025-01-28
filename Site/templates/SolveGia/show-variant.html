@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+    <h1>This page was generated in {{time}}s</h1>
+    {% for task_pack in tasks %}
+        <h1><a href="{{task_pack.0.get_absolute_url}}">№{{task_pack.1}}-{{task_pack.0.pk}}({{task_pack.0.rating}})</a></h1>
+        {% autoescape off %}
+            {{task_pack.0.text}}
+            <br>
+            <h1>Answer:</h1>
+            {% if answers %}
+                {% if task_pack.0.answer %}
+                    {{task_pack.0.answer}}
+                {% else %}
+                    This task haven't answer
+                {% endif %}
+            {% else %}
+                Answers off!
+            {% endif %}
+        {% endautoescape %}
+        <br>
+    {% endfor %}
+
+
+{% endblock %}

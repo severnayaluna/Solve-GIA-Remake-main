@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+{% for hw_pack in results_table %}
+<table style="border: 1px solid black;">
+    <thead>
+    <tr>Results of <a href="{% url 'show-variant' hw_pack.variant.category.name hw_pack.variant.pk 'off' %}">Variant №{{hw_pack.variant.pk }}</a></tr>
+    </thead>
+    <tr>
+        <td style="border: 1px solid black;">Name</td>
+        <td style="border: 1px solid black;">Result</td>
+        <td style="border: 1px solid black;">Tries</td>
+    </tr>
+    {% for result in hw_pack.results %}
+    <tr>
+        <td style="border: 1px solid black;">{{result.user.username}}</td>
+        <td style="border: 1px solid black;">{{result.percent}}%</td>
+        <td style="border: 1px solid black;">{{result.tries}}</td>
+    </tr>
+    {% endfor %}
+</table>
+<br>
+{% endfor %}
+
+
+{% endblock %}
